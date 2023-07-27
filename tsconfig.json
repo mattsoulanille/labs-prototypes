@@ -7,6 +7,7 @@
     { "path": "seeds/graph-playground" },
     { "path": "seeds/graph-runner" },
     { "path": "seeds/breadboard" },
+    { "path": "seeds/coffee-bot" },
     { "path": "seeds/llm-starter" }
   ]
 }

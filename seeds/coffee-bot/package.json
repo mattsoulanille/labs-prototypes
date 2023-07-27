@@ -1,19 +1,16 @@
 {
-  "name": "@google-labs/graph-playground",
+  "name": "@google-labs/coffee-bot",
   "private": true,
   "version": "0.0.1",
-  "description": "Playing with graph structures",
+  "description": "A Coffee-ordering LLM Application implemented in GACL",
   "main": "./dist/src/index.js",
   "exports": "./dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "type": "module",
   "scripts": {
     "test": "FORCE_COLOR=1 ava",
-    "merm": "turbo build && node scripts/mermaidize.js",
-    "prepare": "turbo build && node scripts/prepare.js",
     "build": "FORCE_COLOR=1 tsc --b",
-    "watch": "FORCE_COLOR=1 tsc --b --watch",
-    "dev": "turbo build && node --enable-source-maps ."
+    "watch": "FORCE_COLOR=1 tsc --b --watch"
   },
   "repository": {
     "type": "git",
@@ -43,21 +40,15 @@
   "homepage": "https://github.com/google/labs-prototypes#readme",
   "devDependencies": {
     "@ava/typescript": "^4.0.0",
-    "@google-labs/tsconfig": "*",
-    "@types/node": "^18.16.3",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
+    "@types/node": "^18.16.3",
     "ava": "^5.2.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "@google-labs/tsconfig": "*"
   },
   "dependencies": {
-    "@clack/prompts": "^0.6.3",
     "@google-labs/breadboard": "*",
-    "@google-labs/coffee-bot": "*",
-    "@google-labs/llm-starter": "*",
-    "dotenv": "^16.3.1"
-  },
-  "engines": {
-    "node": ">=19.0.0"
+    "@google-labs/graph-runner": "*"
   }
 }

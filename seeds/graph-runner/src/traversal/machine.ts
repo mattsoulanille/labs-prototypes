@@ -80,6 +80,7 @@ export class TraversalMachine
       inputs,
       currentDescriptor
     );
+    console.log("KEX: Missing inputs for " +currentDescriptor.id + ": " + missingInputs);
 
     const newOpportunities = tails.get(toNode) || [];
 
