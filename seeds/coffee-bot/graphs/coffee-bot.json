@@ -17,7 +17,7 @@
       {
         "from": "no-order",
         "out": "value",
-        "to": "deliberation-template",
+        "to": "ask-user",
         "in": "_something"
       },
       {
@@ -68,6 +68,12 @@
       {
         "from": "deliberation",
         "out": "completion",
+        "to": "extract-json-moves",
+        "in": "json"
+      },
+      {
+        "from": "deliberation",
+        "out": "completion",
         "to": "deliberation-template",
         "in": "agent"
       },
@@ -84,28 +90,24 @@
         "in": "json"
       },
       {
-        "from": "deliberation",
-        "out": "completion",
-        "to": "extract-json-moves",
-        "in": "json"
+        "from": "extract-json-moves",
+        "out": "_",
+        "to": "extract-json-response",
+        "in": "_require-json-moves",
+        "optional": true
       },
       {
         "from": "deliberation",
         "out": "completion",
-        "to": "extract-json-moves",
-        "in": "json"
+        "to": "no-order",
+        "in": "_trigger",
+        "optional": true
       },
       {
         "from": "extract-json-order",
         "out": "result",
         "to": "handle-orders",
         "in": "body"
-      },
-      {
-        "from": "extract-json-response",
-        "out": "result",
-        "to": "ask-user",
-        "in": "message"
       },
       {
         "from": "extract-json-moves",
@@ -118,6 +120,25 @@
         "out": "result",
         "to": "handle-orders",
         "in": "_required"
+      },
+      {
+        "from": "check-if-finished",
+        "out": "result",
+        "to": "no-move-found",
+        "in": "value",
+        "optional": true
+      },
+      {
+        "from": "no-move-found",
+        "out": "value",
+        "to": "extract-json-response",
+        "in": "_requires-no-move"
+      },
+      {
+        "from": "extract-json-response",
+        "out": "result",
+        "to": "ask-user",
+        "in": "message"
       },
       {
         "from": "handle-orders",
@@ -142,6 +163,10 @@
     "nodes": [
       {
         "id": "no-order",
+        "type": "not-logic"
+      },
+      {
+        "id": "no-move-found",
         "type": "not-logic"
       },
       {

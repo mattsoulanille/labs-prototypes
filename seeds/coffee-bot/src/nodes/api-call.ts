@@ -67,7 +67,7 @@ export default async (inputs: InputValues) => {
       //const asString = new TextDecoder("utf-8").decode(response.body);
       console.log(JSON.stringify(body));
       console.log("Received API response: " + body + " versus: " + values.expected_value);
-      if (values.expected_value === null || JSON.stringify(body) === values.expected_value) {
+      if (values.expected_value === undefined || JSON.stringify(body) === values.expected_value) {
         console.log("Successfully returning?");
         return {success: true, response: body};
       }

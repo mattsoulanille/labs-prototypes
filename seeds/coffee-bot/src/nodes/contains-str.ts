@@ -14,9 +14,9 @@ type ContainsStrInputs = {
 
 export default async (inputs: InputValues) => {
   const values = inputs as ContainsStrInputs;
-  var blah = false;
-  blah = values.texts.find((text) => {return text === values.pattern;}) === undefined;
+  var blah = values.texts.find((text) => {return text === values.pattern;});
 
-  return blah ? { result: blah} : {};
+  console.log("KEX: Containts?: " + blah);
+  return blah ? { result: true} : {};
 };
 
