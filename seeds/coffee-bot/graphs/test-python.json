@@ -1,0 +1,36 @@
+{
+    "edges": [
+        {
+          "from": "test-python",
+          "to": "test-python2",
+          "out": "_",
+          "in": "_",
+          "optional": true
+        }
+    ],
+    "nodes": [
+      {
+        "id": "test-python",
+        "type": "python",
+        "configuration": {
+            "code": "print('hi')"
+          }
+      },
+      {
+        "id": "test-python2",
+        "type": "python",
+        "configuration": {
+            "code": "print('hi2')"
+          }
+      }
+    ],
+    "kits": [
+      {
+        "url": "npm:@google-labs/coffee-bot"
+      },
+      {
+        "url": "npm:@google-labs/llm-starter"
+      }
+    ]
+  }
+  

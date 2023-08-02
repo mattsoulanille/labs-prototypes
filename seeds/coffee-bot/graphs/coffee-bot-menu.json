@@ -44,25 +44,25 @@
       {
         "from": "ask-user",
         "out": "text",
-        "to": "deliberation-template",
+        "to": "deliberation-template-py",
         "in": "user"
       },
       {
         "from": "load-prompt",
         "out": "text",
-        "to": "deliberation-template",
+        "to": "deliberation-template-py",
         "in": "context",
         "optional": true
       },
       {
-        "from": "deliberation-template",
+        "from": "deliberation-template-py",
         "out": "prompt",
         "to": "conversation-history",
         "in": "context"
       },
       {
-        "from": "deliberation-template",
-        "out": "prompt",
+        "from": "deliberation-template-py",
+        "out": "output",
         "to": "deliberation",
         "in": "text"
       },
@@ -82,7 +82,7 @@
       {
         "from": "deliberation",
         "out": "completion",
-        "to": "deliberation-template",
+        "to": "deliberation-template-py",
         "in": "agent"
       },
       {
@@ -124,6 +124,12 @@
         "in": "texts"
       },
       {
+        "from": "extract-json-moves",
+        "out": "moves",
+        "to": "check-for-get-menu",
+        "in": "texts"
+      },
+      {
         "from": "check-if-finished",
         "out": "result",
         "to": "handle-orders",
@@ -136,6 +142,20 @@
         "in": "value",
         "optional": true
       },
+      {
+        "from": "check-for-get-menu",
+        "out": "result",
+        "to": "call-get-menu",
+        "in": "_value"
+      },
+      {
+        "from": "call-get-menu",
+        "out": "response",
+        "to": "prompt-template",
+        "in": "user",
+        "optional": true
+      },
+
       {
         "from": "no-move-found",
         "out": "value",
@@ -163,7 +183,7 @@
       {
         "from": "conversation-history",
         "out": "context",
-        "to": "deliberation-template",
+        "to": "deliberation-template-py",
         "in": "context",
         "optional": true
       }
@@ -203,6 +223,22 @@
         "configuration": {
           "agent": "",
           "template": "{{context}}\n{{agent}}\nCustomer: {{user}}\n"
+        }
+      },
+      {
+        "id": "deliberation-template-py",
+        "type": "python",
+        "configuration": {
+          "agent": "",
+          "code": "import sys\nagent = sys.argv[1]\napi = sys.argv[2]\nuser = sys.argv[3]\noutput = ''\nif agent:\n  output = output + agent + '\\n'\nif api:\n  output = output + 'API: ' + api + '\\n'\nif user:\n  output = output + 'Customer: ' + user + '\\n'\nprint(output)\n"
+        }
+      },
+      {
+        "id": "input-template",
+        "type": "prompt-template",
+        "configuration": {
+          "agent": "",
+          "template": "API: {{API}}\nCustomer: {{user}}\n"
         }
       },
       {
@@ -267,6 +303,13 @@
         "type": "contains-str",
         "configuration": {
           "pattern": "finishOrder"
+        }
+      },
+      {
+        "id": "check-for-get-menu",
+        "type": "contains-str",
+        "configuration": {
+          "pattern": "checkMenu"
         }
       },
       {
