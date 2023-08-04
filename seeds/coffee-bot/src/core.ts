@@ -12,6 +12,7 @@ import containsStr from "./nodes/contains-str.js";
 import notLogic from "./nodes/not-logic.js";
 import getField from "./nodes/get-field.js";
 import python from "./nodes/python.js";
+import regex from "./nodes/regex.js";
 
 export const coffeeHandlers = {
   "api-call": apiCall,
@@ -19,4 +20,5 @@ export const coffeeHandlers = {
   "not-logic": notLogic,
   "get-field": getField,
   "python": python,
+  "regex": regex,
 };

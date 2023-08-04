@@ -42,6 +42,13 @@
         "optional": true
       },
       {
+        "from": "load-first-question",
+        "out": "text",
+        "to": "deliberation-template-py",
+        "in": "agent",
+        "optional": true
+      },
+      {
         "from": "ask-user",
         "out": "text",
         "to": "deliberation-template-py",
@@ -76,8 +83,8 @@
       {
         "from": "deliberation",
         "out": "completion",
-        "to": "extract-json-moves",
-        "in": "json"
+        "to": "extract-action",
+        "in": "text"
       },
       {
         "from": "deliberation",
@@ -88,20 +95,20 @@
       {
         "from": "deliberation",
         "out": "completion",
-        "to": "extract-json-order",
-        "in": "json"
+        "to": "extract-order",
+        "in": "text"
       },
       {
         "from": "deliberation",
         "out": "completion",
-        "to": "extract-json-response",
-        "in": "json"
+        "to": "extract-response",
+        "in": "text"
       },
       {
-        "from": "extract-json-moves",
+        "from": "extract-action",
         "out": "_",
-        "to": "extract-json-response",
-        "in": "_require-json-moves",
+        "to": "extract-response",
+        "in": "_require-action",
         "optional": true
       },
       {
@@ -112,20 +119,20 @@
         "optional": true
       },
       {
-        "from": "extract-json-order",
-        "out": "result",
+        "from": "extract-order",
+        "out": "match1",
         "to": "handle-orders",
         "in": "body"
       },
       {
-        "from": "extract-json-moves",
-        "out": "moves",
+        "from": "extract-action",
+        "out": "groups",
         "to": "check-if-finished",
         "in": "texts"
       },
       {
-        "from": "extract-json-moves",
-        "out": "moves",
+        "from": "extract-action",
+        "out": "groups",
         "to": "check-for-get-menu",
         "in": "texts"
       },
@@ -159,12 +166,12 @@
       {
         "from": "no-move-found",
         "out": "value",
-        "to": "extract-json-response",
+        "to": "extract-response",
         "in": "_requires-no-move"
       },
       {
-        "from": "extract-json-response",
-        "out": "result",
+        "from": "extract-response",
+        "out": "match1",
         "to": "ask-user",
         "in": "message"
       },
@@ -208,7 +215,7 @@
         "id": "load-prompt",
         "type": "text-asset",
         "configuration": {
-          "filename": "seeds/coffee-bot/prompts/coffee-prompt.txt"
+          "filename": "seeds/coffee-bot/prompts/coffee-menu-prompt.txt"
         }
       },
       {
@@ -230,7 +237,7 @@
         "type": "python",
         "configuration": {
           "agent": "",
-          "code": "import sys\nagent = sys.argv[1]\napi = sys.argv[2]\nuser = sys.argv[3]\noutput = ''\nif agent:\n  output = output + agent + '\\n'\nif api:\n  output = output + 'API: ' + api + '\\n'\nif user:\n  output = output + 'Customer: ' + user + '\\n'\nprint(output)\n"
+          "file": "../../../../../../labs-prototypes/append_stuff.py"
         }
       },
       {
@@ -257,28 +264,28 @@
         "type": "text-completion",
         "configuration": {
           "HARM_CATEGORY_DEROGATORY": "BLOCK_MEDIUM_AND_ABOVE",
-          "candidate_count": 8
+          "candidate_count": 1
         }
       },
       {
-        "id": "extract-json-response",
-        "type": "jsonata",
+        "id": "extract-response",
+        "type": "regex",
         "configuration": {
-          "expression": "response"
+          "expression": "\"action\": \"(.*)\",\n"
         }
       },
       {
-        "id": "extract-json-order",
-        "type": "jsonata",
+        "id": "extract-order",
+        "type": "regex",
         "configuration": {
-          "expression": "currentOrder"
+          "pattern": "\"currentOrder\":(.*),\n"
         }
       },
       {
-        "id": "extract-json-moves",
-        "type": "jsonata",
+        "id": "extract-action",
+        "type": "regex",
         "configuration": {
-          "expression": "a"
+          "pattern": "\"action\": \"(.*)\",\n"
         }
       },
       {
@@ -290,6 +297,16 @@
       },
       {
         "id": "handle-orders",
+        "type": "api-call",
+        "configuration": {
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      },
+      {
+        "id": "call-get-menu",
         "type": "api-call",
         "configuration": {
           "method": "POST",

@@ -12,10 +12,10 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "cwd": "${workspaceFolder}/seeds/graph-playground",
+            "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
             "program": "${workspaceFolder}/seeds/graph-playground/src/index.ts",
-            "args": ["graphs/coffee-bot.json"],
+            "args": ["seeds/coffee-bot/graphs/coffee-bot-menu.json"],
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]

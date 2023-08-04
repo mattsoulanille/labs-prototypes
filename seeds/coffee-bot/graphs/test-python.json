@@ -20,7 +20,7 @@
         "id": "test-python2",
         "type": "python",
         "configuration": {
-            "code": "print('hi2')"
+            "file": "../../../../../../labs-prototypes/append_stuff.py"
           }
       }
     ],

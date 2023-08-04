@@ -109,11 +109,12 @@ export default async (inputs: InputValues) => {
   }
   
   const stopSequences = values["stop-sequences"] || [];
-  stopSequences.forEach((stopSequence) => prompt.addStopSequence(stopSequence));
+  //stopSequences.forEach((stopSequence) => prompt.addStopSequence(stopSequence));
   const request = palm(values.API_KEY).text(prompt);
   const data = await fetch(request);
   const response = (await data.json()) as GenerateTextResponse;
-  const completion = processResponse(response) as string;
+  //const completion = processResponse(response) as string;
+  const completion = response?.candidates?.[0]?.output as string;
   const candidates: string[] = [];
   response?.candidates?.forEach((candidate) => {candidates.push(candidate.output ? candidate.output : "");});
   return { completion, candidates };

@@ -5,7 +5,6 @@
  */
 
 import type { InputValues } from "@google-labs/graph-runner";
-import { GenerateTextResponse, Text, palm } from "@google-labs/palm-lite";
 
 type ContainsStrInputs = {
   texts: string[];
