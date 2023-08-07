@@ -20,6 +20,14 @@ type TextCompletionInputs = {
    * Stop sequences
    */
   "stop-sequences": string[];
+  /**
+   * Harm filter setting for Palm.
+   */
+  HARM_CATEGORY_DEROGATORY: string;
+  /**
+   * Number of candidates to return with. Defaults to 1.
+   */
+  candidate_count: number;
 };
 
 export default async (inputs: InputValues) => {
@@ -29,11 +37,26 @@ export default async (inputs: InputValues) => {
   if (!values.text) throw new Error("Text completion requires `text` input");
 
   const prompt = new Text().text(values.text);
+  if (values.HARM_CATEGORY_DEROGATORY) {
+    prompt.addSafetySetting(
+      "HARM_CATEGORY_DEROGATORY",
+      "BLOCK_MEDIUM_AND_ABOVE"
+    );
+  }
+  if (values.candidate_count) {
+    prompt.candidateCount = values.candidate_count;
+  }
+
   const stopSequences = values["stop-sequences"] || [];
-  stopSequences.forEach((stopSequence) => prompt.addStopSequence(stopSequence));
+  //stopSequences.forEach((stopSequence) => prompt.addStopSequence(stopSequence));
   const request = palm(values.API_KEY).text(prompt);
   const data = await fetch(request);
   const response = (await data.json()) as GenerateTextResponse;
+  //const completion = processResponse(response) as string;
   const completion = response?.candidates?.[0]?.output as string;
-  return { completion };
+  const candidates: string[] = [];
+  response?.candidates?.forEach((candidate) => {
+    candidates.push(candidate.output ? candidate.output : "");
+  });
+  return { completion, candidates };
 };

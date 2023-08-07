@@ -60,7 +60,7 @@ intro("Let's traverse a graph!");
 const board = await Board.load(process.argv[2]);
 
 // Add a custom kit.
-//board.addKit(ReActHelper);
+board.addKit(ReActHelper);
 
 // Run the board until it finishes. This may run forever.
 for await (const result of board.run(probe)) {
