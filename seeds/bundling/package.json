@@ -1,0 +1,32 @@
+{
+  "name": "@google-labs/bundling",
+  "version": "0.0.1",
+  "description": "bundle for iife consumption",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild --bundle src/index.ts --sourcemap=inline --outfile=dist/bundle.js --platform=browser --format=esm --external:'node:fs/promises' --external:'node:vm'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/google/labs-prototypes"
+  },
+  "files": [
+    "dist/src"
+  ],
+  "keywords": [],
+  "author": "Google Labs Team",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/google/labs-prototypes/issues"
+  },
+  "homepage": "https://github.com/google/labs-prototypes/tree/main/seeds/llm-starter#readme",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "@google-labs/breadboard": "*",
+    "@google-labs/llm-starter": "*"
+  },
+  "engines": {
+    "node": ">=19.0.0"
+  }
+}
