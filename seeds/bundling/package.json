@@ -4,7 +4,8 @@
   "description": "bundle for iife consumption",
   "type": "module",
   "scripts": {
-    "build": "esbuild --bundle src/index.ts --sourcemap=inline --outfile=dist/bundle.js --platform=browser --format=esm --external:'node:fs/promises' --external:'node:vm'"
+    "build": "esbuild --bundle src/index.ts --sourcemap=inline --outfile=dist/bundle.js --platform=browser --format=esm --external:'node:fs/promises' --external:'node:vm' && npm run build:api",
+    "build:api": "tsc && api-extractor run"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/google/labs-prototypes/tree/main/seeds/llm-starter#readme",
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.38.3"
   },
   "dependencies": {
     "@google-labs/breadboard": "*",
